@@ -38,7 +38,7 @@ NAME            STATUS   ROLES    AGE     VERSION
 kube-master-1   Ready    master   4m34s   v1.15.0
 kube-node-1     Ready    <none>   3m12s   v1.15.0
 
-vagrant@kube-master-1:~$ kubectl create -f https://raw.githubusercontent.com/labarhack/vagrant-kubernetes/master/manifests/http-server.yml
+vagrant@kube-master-1:~$ kubectl create -f https://raw.githubusercontent.com/labarhack/vagrant-kubernetes/master/manifests/http-echo.yml
 
 vagrant@kube-master-1:~$ kubectl get pods
 NAME                        READY   STATUS        RESTARTS   AGE
@@ -54,4 +54,4 @@ daemonset.extensions/traefik-ingress-controller created
 service/traefik-ingress-service created
 ```
 
-View Traefik admin interface: http://localhost:8080
+View Traefik admin interface http://localhost:8080 and view http-echo `curl http://localhost:8081/http-echo`
