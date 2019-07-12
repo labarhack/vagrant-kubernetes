@@ -31,3 +31,17 @@ spec:
     targetPort: 5678
   selector:
     app: http-echo
+---
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: http-echo
+  namespace: default
+spec:
+  rules:
+  - http:
+      paths:
+      - path: /http-echo
+        backend:
+          serviceName: http-echo
+          servicePort: 5678

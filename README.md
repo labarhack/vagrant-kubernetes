@@ -43,4 +43,17 @@ vagrant@kube-master-1:~$ kubectl create -f https://raw.githubusercontent.com/lab
 vagrant@kube-master-1:~$ kubectl get pods
 NAME                        READY   STATUS        RESTARTS   AGE
 http-echo-8955f4b7d-qfxrw   1/1     Running       0          5s
+
+vagrant@kube-master-1:~$ kubectl apply -f https://raw.githubusercontent.com/containous/traefik/v1.7/examples/k8s/traefik-rbac.yaml
+clusterrole.rbac.authorization.k8s.io/traefik-ingress-controller created
+clusterrolebinding.rbac.authorization.k8s.io/traefik-ingress-controller created
+
+vagrant@kube-master-1:~$ kubectl apply -f https://raw.githubusercontent.com/containous/traefik/v1.7/examples/k8s/traefik-ds.yaml
+serviceaccount/traefik-ingress-controller created
+daemonset.extensions/traefik-ingress-controller created
+service/traefik-ingress-service created
+
+vagrant@kube-master-1:~$ kubectl apply -f https://raw.githubusercontent.com/labarhack/vagrant-kubernetes/master/manifests/traefik-ui.yml
+
+
 ```

@@ -38,8 +38,8 @@ Vagrant.configure("2") do |config|
       kube_node.vm.hostname = "kube-node-#{machine_id}"
       kube_node.vm.network "private_network", ip: "10.10.10.6#{machine_id}"
       if machine_id == 1
+        kube_node.vm.network "forwarded_port", guest: 80, host: "8081", guest_ip: "10.10.10.6#{machine_id}"
         kube_node.vm.network "forwarded_port", guest: 8080, host: "8080", guest_ip: "10.10.10.6#{machine_id}"
-        kube_node.vm.network "forwarded_port", guest: 8443, host: "8443", guest_ip: "10.10.10.6#{machine_id}"
       end
       kube_node.vm.provision "ansible" do |ansible|
           ansible.playbook = "ansible/kube_node.yml"
