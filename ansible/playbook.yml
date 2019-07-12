@@ -1,0 +1,96 @@
+---
+- name: Preparing image with Docker and Kubernetes
+  hosts: all
+  become: yes
+  gather_facts: false
+
+  pre_tasks:
+  - name: Install python2 for Ansible
+    raw: bash -c "test -e /usr/bin/python || (apt -qqy update && apt install -qqy python-minimal)"
+    register: output
+    changed_when: output.stdout != ""
+  - name: Gathering Facts
+    setup:
+
+  # -----------------------------------------------------------
+  # Update distro
+  # -----------------------------------------------------------
+  tasks:
+  - name: update apt
+    apt:
+      update_cache: yes
+
+  # -----------------------------------------------------------
+  # Prepare needed packages
+  # -----------------------------------------------------------
+  - name: Update all packages to the latest version
+    apt:
+      upgrade: dist
+  - name: Install the package "apt-transport-https"
+    apt:
+      name: apt-transport-https
+  - name: Install the package "ca-certificates"
+    apt:
+      name: ca-certificates
+  - name: Install the package "curl"
+    apt:
+      name: curl
+  - name: Install the package "software-properties-common"
+    apt:
+      name: software-properties-common
+  - name: Install the package "gnupg-agent"
+    apt:
+      name: software-properties-common
+  - name: Install the package "unzip"
+    apt:
+      name: unzip
+  # -----------------------------------------------------------
+  # Docker
+  # -----------------------------------------------------------
+  # Add GPG key for Docker
+  - name: Add an apt key for Docker
+    apt_key:
+      url: https://download.docker.com/linux/ubuntu/gpg
+      state: present
+  # Add Docker repo 
+  - name: Add Docker repository 
+    apt_repository:
+      repo: deb https://download.docker.com/linux/{{ ansible_distribution|lower }} {{ ansible_distribution_release }} stable
+      filename: /etc/apt/sources.list.d/docker
+      state: present
+  # Install Docker
+  - name: Install Docker CE
+    apt:
+      name: docker-ce
+  # -----------------------------------------------------------
+  # Kubernetes
+  # -----------------------------------------------------------
+  # Install Kubernetes
+  - name: Add an apt key for Kubernetes
+    apt_key:
+      url: https://packages.cloud.google.com/apt/doc/apt-key.gpg
+      state: present
+  # Add Kubernetes repo 
+  - name: Add Kubernetes repository 
+    apt_repository:
+      repo: deb https://apt.kubernetes.io kubernetes-xenial main
+      filename: /etc/apt/sources.list.d/kubernetes
+      state: present
+  # Install Kubernetes
+  - name: Install Kubernetes
+    apt:
+      name: "{{ item }}"
+    loop:
+      - kubelet
+      - kubeadm
+      - kubectl
+
+  # -----------------------------------------------------------
+  # Cleanup
+  # -----------------------------------------------------------
+  - name: Remove useless packages from the cache
+    apt:
+      autoclean: yes
+  - name: Remove dependencies that are no longer required
+    apt:
+      autoremove: yes

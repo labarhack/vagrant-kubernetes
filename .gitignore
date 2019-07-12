@@ -1,0 +1,5 @@
+.envrc
+.vagrant
+*.log
+packer/output-vagrant/
+ansible/join-command

@@ -1,0 +1,17 @@
+---
+- name: Playbook for Kubernetes node
+  hosts: all
+  become: yes
+
+  tasks:
+
+  - name: Configure Kubernetes
+    lineinfile:
+      path: /etc/default/kubelet
+      line: KUBELET_EXTRA_ARGS=--node-ip={{ node_addr }}
+      create: yes
+
+  - name: Copy the join command to server location
+    copy: src=join-command dest=/tmp/join-command.sh mode=0777
+  - name: Join the node to cluster
+    command: sh /tmp/join-command.sh

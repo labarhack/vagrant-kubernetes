@@ -1,0 +1,20 @@
+{
+  "builders": [
+    {
+      "communicator": "ssh",
+      "source_path": "{{ user `box` }}",
+      "provider": "virtualbox",
+      "add_force": false,
+      "skip_add": true,
+      "type": "vagrant"
+    }
+  ],
+
+  "provisioners": [
+    {
+      "type": "ansible",
+      "playbook_file": "../ansible/playbook.yml",
+      "user": "vagrant"
+    }
+  ]
+}
