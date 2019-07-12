@@ -32,5 +32,15 @@ vagrant status
 
 ```
 vagrant ssh kube_master_1
-kubectl get nodes
+
+vagrant@kube-master-1:~$ kubectl get nodes
+NAME            STATUS   ROLES    AGE     VERSION
+kube-master-1   Ready    master   4m34s   v1.15.0
+kube-node-1     Ready    <none>   3m12s   v1.15.0
+
+vagrant@kube-master-1:~$ kubectl create -f https://raw.githubusercontent.com/labarhack/vagrant-kubernetes/master/manifests/http-server.yml
+
+vagrant@kube-master-1:~$ kubectl get pods
+NAME                        READY   STATUS        RESTARTS   AGE
+http-echo-8955f4b7d-qfxrw   1/1     Running       0          5s
 ```
