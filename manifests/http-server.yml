@@ -2,18 +2,18 @@
 apiVersion: extensions/v1beta1
 kind: Deployment
 metadata:
-  name: echo-server
+  name: http-server
   namespace: default
 spec:
   replicas: 1
   template:
     metadata:
       labels:
-        app: echo-server
+        app: http-server
     spec:
       containers:
-      - name: echo-server
-        image: hashicorp/echo-server:latest
+      - name: http-server
+        image: hashicorp/http-server:latest
         args: 
           - -text=hello-world
         ports:
