@@ -1,0 +1,8 @@
+version: 2
+jobs:
+  build:
+    docker:
+      - image: dmelina/vagrant:2.2.5
+    steps:
+      - checkout
+      - run: vagrant validate --ignore-provider
