@@ -1,5 +1,5 @@
 # Vagrant Nomad cluster
-[![Open Source Helpers](https://www.codetriage.com/labarhack/vagrant-kubernetes/badges/users.svg)](https://www.codetriage.com/labarhack/vagrant-kubernetes)
+[![Open Source Helpers](https://www.codetriage.com/labarhack/vagrant-kubernetes/badges/users.svg)](https://www.codetriage.com/labarhack/vagrant-kubernetes) [![CircleCI](https://circleci.com/gh/labarhack/vagrant-kubernetes.svg?style=svg)](https://circleci.com/gh/labarhack/vagrant-kubernetes)
 
 Start Kubernetes cluster with single master.
 
